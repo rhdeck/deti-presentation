@@ -9,6 +9,7 @@ import {
   FaGithub,
   FaHourglass,
   FaNpm,
+  FaTrophy,
   FaTwitter,
 } from "react-icons/fa";
 import config from "./config.json";
@@ -19,11 +20,13 @@ import {
   QuestionMarkCircleIcon,
   SparklesIcon,
   VideoCameraIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/outline";
 import ModalSlides from "./ModalSlides";
 const slideClass =
-  "w-80 mb-6 bg-black bg-opacity-80 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
-
+  "w-80 mb-6 bg-black bg-opacity-90 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
+const blurOff = "";
+const blurOn = "blur-lg";
 const {
   host,
   canisters: { backend },
@@ -52,7 +55,7 @@ export const LoggedOut: FC = () => {
   const backend = useBackend();
   useEffect(() => {
     setTimeout(() => {
-      setNewClass("blur-sm");
+      setNewClass(blurOff);
       setPlugNewClass("opacity-100");
       console.log("set to 100");
     }, 5000);
@@ -64,10 +67,10 @@ export const LoggedOut: FC = () => {
         setIsFirst(ticks);
       } else {
         if (ticks !== isFirst) {
-          setNewClass("blur-lg");
+          setNewClass(blurOn);
           toast("Received a DeTi Message!");
           setTimeout(() => {
-            setNewClass("blur-sm");
+            setNewClass(blurOff);
           }, 1500);
         }
       }
@@ -114,16 +117,17 @@ export const LoggedOut: FC = () => {
 
       <div
         className={[
-          "h-screen w-screen absolute flex justify-around content-around transition duration-1000 ",
+          "h-screen w-screen absolute lg:flex lg:flex-col lg:justify-center content-around transition duration-1000  overflow-scroll",
         ].join(" ")}
       >
-        <div
-          className={[
-            "max-h-screen overflow-scroll flex flex-col justify-between transition-opacity  duration-1000",
-            plugNewClass,
-          ].join(" ")}
-        >
-          {/* <div className="bg-black bg-opacity-50 flex flex-row w-screen justify-between p-4">
+        <div className="flex justify-center align-center">
+          <div
+            className={[
+              "  grid grid-col-1 lg:grid-cols-3 gap-12 transition-opacity  duration-1000 p-4",
+              plugNewClass,
+            ].join(" ")}
+          >
+            {/* <div className="bg-black bg-opacity-50 flex flex-row w-screen justify-between p-4">
             <a
               href="https://github.com/akshay-rakheja/supernova2022"
               className="text-gray-200 hover:text-gray-100 hover:scale-105 transition duration-250"
@@ -137,35 +141,53 @@ export const LoggedOut: FC = () => {
               ...or just enjoy the pulses every 10s
             </div>
           </div> */}
-          <div></div>
-          <div>
-            <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-60 rounded-lg">
-              Presentation
-            </h3>
-            <div className="flex justify-around w-full flex-row">
-              <div className="flex">
-                <button
-                  className={slideClass}
-                  onClick={(event) => {
-                    setIsOpen(true);
-                    console.log("clicky clicky");
-                  }}
-                >
-                  <div className="flex flex-row">
-                    <SparklesIcon className="h-6 w-6 mr-2" />
-                    Supernova Demo Day Presentation
-                  </div>
-                </button>
+            <div className=" col-span-1">
+              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-80 rounded-lg">
+                Presentation
+              </h3>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      setIsOpen(true);
+                      console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <SparklesIcon className="h-6 w-6 mr-2" />
+                      Supernova Demo Day Presentation
+                    </div>
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div className="flex justify-around w-full flex-row">
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://www.youtube.com/watch?v=TK-RihJkvDw",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <VideoCameraIcon className="h-6 w-6 mr-2" />
+                      View Youtube Video
+                    </div>
+                  </button>
+                </div>
+              </div>
               <div className="flex">
                 <button
                   className={slideClass}
                   onClick={(event) => {
                     window.open(
-                      "https://www.youtube.com/watch?v=TK-RihJkvDw",
+                      "https://www.devpost.com/software/decentralized-time",
                       "_blank"
                     );
                     // setIsOpen(true);
@@ -173,115 +195,142 @@ export const LoggedOut: FC = () => {
                   }}
                 >
                   <div className="flex flex-row">
-                    <VideoCameraIcon className="h-6 w-6 mr-2" />
-                    View Youtube Video
+                    <ChevronRightIcon className="h-6 w-6 mr-2" />
+                    Read Devpost Profile
                   </div>
                 </button>
               </div>
             </div>
-            <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-60 rounded-lg">
-              Demonstration
-            </h3>
+            <div className=" col-span-1">
+              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-80 rounded-lg">
+                Demonstration
+              </h3>
 
-            <div className="flex justify-around w-full flex-row">
-              <div className="flex">
-                <button
-                  className={slideClass}
-                  onClick={(event) => {
-                    window.open(
-                      "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/",
-                      "_blank"
-                    );
-                    // setIsOpen(true);
-                    // console.log("clicky clicky");
-                  }}
-                >
-                  <div className="flex flex-row">
-                    <FaHourglass className="h-6 w-6 mr-2" />
-                    DeTi Home Page
-                  </div>
-                </button>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <FaHourglass className="h-6 w-6 mr-2" />
+                      DeTi Home Page
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://d7hzd-wiaaa-aaaap-qamba-cai.ic0.app/",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <CheckCircleIcon className="h-6 w-6 mr-2" />
+                      DeTi Tester
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://pax7q-vaaaa-aaaap-qanoq-cai.ic0.app/",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <FaTrophy className="h-6 w-6 mr-2" />
+                      DeTi Presentation (You are here)
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="flex justify-around w-full flex-row">
-              <div className="flex">
-                <button
-                  className={slideClass}
-                  onClick={(event) => {
-                    window.open(
-                      "https://d7hzd-wiaaa-aaaap-qamba-cai.ic0.app/",
-                      "_blank"
-                    );
-                    // setIsOpen(true);
-                    // console.log("clicky clicky");
-                  }}
-                >
-                  <div className="flex flex-row">
-                    <CheckCircleIcon className="h-6 w-6 mr-2" />
-                    DeTi Tester
-                  </div>
-                </button>
+            <div className=" col-span-1">
+              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-80 rounded-lg">
+                Resources
+              </h3>
+
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open("https://twitter.com/deti_icp", "_blank");
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <FaTwitter className="h-6 w-6 mr-2" />
+                      Follow us on Twitter
+                    </div>
+                  </button>
+                </div>
               </div>
-            </div>
-            <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-60 rounded-lg">
-              Resources
-            </h3>
-            <div className="flex justify-around w-full flex-row">
-              <div className="flex">
-                <button
-                  className={slideClass}
-                  onClick={(event) => {
-                    window.open(
-                      "https://github.com/akshay-rakheja/supernova2022",
-                      "_blank"
-                    );
-                    // setIsOpen(true);
-                    // console.log("clicky clicky");
-                  }}
-                >
-                  <div className="flex flex-row">
-                    <FaGithub className="h-6 w-6 mr-2" />
-                    DeTi GitHub
-                  </div>
-                </button>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://npmjs.com/@raydeck/useplug",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <FaNpm className="h-6 w-6 mr-2" />
+                      usePlug NPM Package
+                    </div>
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="flex justify-around w-full flex-row">
-              <div className="flex">
-                <button
-                  className={slideClass}
-                  onClick={(event) => {
-                    window.open("https://twitter.com/deti_icp", "_blank");
-                    // setIsOpen(true);
-                    // console.log("clicky clicky");
-                  }}
-                >
-                  <div className="flex flex-row">
-                    <FaTwitter className="h-6 w-6 mr-2" />
-                    DeTi Twitter
-                  </div>
-                </button>
-              </div>
-            </div>
-            <div className="flex justify-around w-full flex-row">
-              <div className="flex">
-                <button
-                  className={slideClass}
-                  onClick={(event) => {
-                    window.open("https://npmjs.com/@raydeck/useplug", "_blank");
-                    // setIsOpen(true);
-                    // console.log("clicky clicky");
-                  }}
-                >
-                  <div className="flex flex-row">
-                    <FaNpm className="h-6 w-6 mr-2" />
-                    usePlug NPM package
-                  </div>
-                </button>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://github.com/rhdeck/ic-azle-react-template",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <FaGithub className="h-6 w-6 mr-2" />
+                      Github Template
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <div className="flex justify-around w-full flex-row"></div>
         </div>
       </div>
       <ModalSlides show={isOpen} setShow={setIsOpen} />
