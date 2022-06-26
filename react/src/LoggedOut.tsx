@@ -25,7 +25,7 @@ import {
 import ModalSlides from "./ModalSlides";
 const slideClass =
   "w-80 mb-6 bg-black bg-opacity-90 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
-const blurOff = "";
+const blurOff = "blur-sm";
 const blurOn = "blur-lg";
 const {
   host,
@@ -123,7 +123,7 @@ export const LoggedOut: FC = () => {
         <div className="flex justify-center align-center">
           <div
             className={[
-              "  grid grid-col-1 lg:grid-cols-3 gap-12 transition-opacity  duration-1000 p-4",
+              "  grid grid-cols-1 lg:grid-cols-3 gap-12 transition-opacity  duration-1000 p-4",
               plugNewClass,
             ].join(" ")}
           >
@@ -141,8 +141,13 @@ export const LoggedOut: FC = () => {
               ...or just enjoy the pulses every 10s
             </div>
           </div> */}
-            <div className=" col-span-1">
-              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-80 rounded-lg">
+            <div className="lg:hidden col-span-1">
+              <h2 className="text-gray-100 font-bold text-4xl flex justify-center p-4 m-2 bg-black bg-opacity-80 rounded-lg">
+                Decentralized Time
+              </h2>
+            </div>
+            <div className=" col-span-1 bg-black bg-opacity-80 rounded-lg p-4">
+              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 ">
                 Presentation
               </h3>
               <div className="flex justify-around w-full flex-row">
@@ -182,27 +187,29 @@ export const LoggedOut: FC = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex">
-                <button
-                  className={slideClass}
-                  onClick={(event) => {
-                    window.open(
-                      "https://www.devpost.com/software/decentralized-time",
-                      "_blank"
-                    );
-                    // setIsOpen(true);
-                    // console.log("clicky clicky");
-                  }}
-                >
-                  <div className="flex flex-row">
-                    <ChevronRightIcon className="h-6 w-6 mr-2" />
-                    Read Devpost Profile
-                  </div>
-                </button>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://www.devpost.com/software/decentralized-time",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <ChevronRightIcon className="h-6 w-6 mr-2" />
+                      Read Devpost Profile
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
-            <div className=" col-span-1">
-              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-80 rounded-lg">
+            <div className=" col-span-1 bg-black bg-opacity-80 rounded-lg p-4">
+              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2">
                 Demonstration
               </h3>
 
@@ -267,8 +274,8 @@ export const LoggedOut: FC = () => {
                 </div>
               </div>
             </div>
-            <div className=" col-span-1">
-              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-80 rounded-lg">
+            <div className=" col-span-1 bg-black bg-opacity-80 rounded-lg p-4">
+              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2">
                 Resources
               </h3>
 
