@@ -1,0 +1,12 @@
+{
+  "canisters": {
+    "backend": {
+      "type": "custom",
+      "build": "npx azle backend",
+      "root": "src",
+      "ts": "src/backend.ts",
+      "candid": "src/backend.did",
+      "wasm": "target/wasm32-unknown-unknown/release/backend.wasm.gz"
+    }
+  }
+}

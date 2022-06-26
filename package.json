@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "build": "cd react && yarn && yarn build",
+    "start": "(cd react && yarn start)",
+    "azle": "cd azle && npx azle",
+    "rebuild": "dfx canister create --all && dfx build && yarn generate",
+    "rebuild:backend": "dfx canister create backend && dfx build backend",
+    "generate": "dfx generate backend && ts-node generate_config.ts",
+    "postinstall": "(cd react && yarn) && (cd azle && yarn)",
+    "deploy:local": "ts-node set_mode.ts local && yarn rebuild && dfx deploy",
+    "deploy:production": "ts-node set_mode.ts production && yarn rebuild && dfx deploy --network ic"
+  },
+  "dependencies": {
+    "@types/node": "^18.0.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  }
+}
