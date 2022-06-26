@@ -1,6 +1,7 @@
-# ic-azle-react-ts-template
- Template for front-to-back IC project in Typescript
+# DETI-Presentation
+ DFX Canister for Supernova Demo Day presentation. Built with Typescript, Azle and DeTi.
 
+Find this project deployed on the [Internet Computer](https://pax7q-vaaaa-aaaap-qanoq-cai.ic0.app/).
 ## Prerequisites
 
 1. DFX
@@ -62,6 +63,6 @@ The backend is written in TS to introduce one to [Azle](https://github.com/demer
 
 ## Thank you
 
-We are grateful to the DFINITY foundation, the SUPERNOVA hackathon, helpful people on the DFINITY dev discord, and especially to Jordan Last for getting us through some of the tough parts of making our project work on IC and on Azle. We hope this template makes that journey easier for you too! 
+We are grateful to the DFINITY foundation, the SUPERNOVA hackathon, helpful people on the DFINITY dev discord, and especially to Jordan Last for getting us through some of the tough parts of making our project work on IC and on Azle. 
 
 Happy building! 
