@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import config from "./config.json";
 import { toast } from "react-toastify";
+import copy from "copy-to-clipboard";
 import {
   ArrowUpIcon,
   CheckCircleIcon,
@@ -21,6 +22,7 @@ import {
   SparklesIcon,
   VideoCameraIcon,
   ChevronRightIcon,
+  ClipboardCopyIcon,
 } from "@heroicons/react/outline";
 import ModalSlides from "./ModalSlides";
 const slideClass =
@@ -32,6 +34,7 @@ const {
   canisters: { backend },
 } = config[config.mode as "production" | "local"];
 let timer: NodeJS.Timer;
+const backendStr = backend;
 const useBackend = () => {
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
   useEffect(() => {
@@ -162,6 +165,38 @@ export const LoggedOut: FC = () => {
                     <div className="flex flex-row">
                       <SparklesIcon className="h-6 w-6 mr-2" />
                       Supernova Demo Day Presentation
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      copy(backendStr);
+                      toast("Copied to clipboard");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <ClipboardCopyIcon className="h-6 w-6 mr-2" />
+                      Copy Back-End Canister Id
+                    </div>
+                  </button>
+                </div>
+              </div>{" "}
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      copy("tick");
+                      toast("Copied to clipboard");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <ClipboardCopyIcon className="h-6 w-6 mr-2" />
+                      Copy Back-End Function Name
                     </div>
                   </button>
                 </div>

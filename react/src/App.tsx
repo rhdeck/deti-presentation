@@ -30,7 +30,7 @@ function App() {
         position="bottom-right"
         autoClose={2000}
         toastClassName={(context) => {
-          return "bg-black text-white bg-opacity-40 p-2 rounded-lg";
+          return "bg-blue-900 text-white  p-2 rounded-lg";
         }}
       />
     </BrowserRouter>
