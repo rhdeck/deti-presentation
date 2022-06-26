@@ -88,6 +88,7 @@ export const ModalSlides: FC<{
   useEffect(() => {
     setShow(false);
   }, [pressedEscape, setShow]);
+  const currentStepRef = useRef(currentStep);
   const goLeft = useCallback(() => {
     console.log("Pressed left");
     setMoving("left");
@@ -97,7 +98,7 @@ export const ModalSlides: FC<{
     (event?: React.MouseEvent<HTMLButtonElement>) => {
       console.log("Pressed right");
       setMoving("right");
-      if (currentStep === slides.length - 1) setShow(false);
+      if (currentStepRef.current === slides.length - 1) setShow(false);
       setCurrentStep((old) => Math.min(old + 1, slides.length - 1));
       if (event) {
         event.preventDefault();
@@ -105,7 +106,7 @@ export const ModalSlides: FC<{
       }
       return false;
     },
-    [currentStep, setShow, slides]
+    [setShow, slides]
   );
   const goTo = useCallback(
     (index: number) => {
@@ -119,7 +120,8 @@ export const ModalSlides: FC<{
     [currentStep]
   );
   useEffect(() => {
-    if (pressedRight || pressedSpace) {
+    if (pressedRight) {
+      console.log("pressed rigth");
       goRight();
     } else if (pressedLeft) {
       goLeft();
@@ -127,6 +129,7 @@ export const ModalSlides: FC<{
   }, [goLeft, goRight, pressedLeft, pressedRight, pressedSpace]);
   useEffect(() => {
     console.log("Current slide index is ", currentStep);
+    currentStepRef.current = currentStep;
   }, [currentStep, slides.length]);
   const rightButton = useRef<HTMLButtonElement | null>(null);
   // useEffect(() => {
