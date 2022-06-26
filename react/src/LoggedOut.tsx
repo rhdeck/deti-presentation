@@ -123,7 +123,7 @@ export const LoggedOut: FC = () => {
         <div className="flex justify-center align-center">
           <div
             className={[
-              "  grid grid-cols-1 lg:grid-cols-3 gap-12 transition-opacity  duration-1000 p-4",
+              "  grid grid-cols-1 lg:grid-cols-2 gap-12 transition-opacity  duration-1000 p-4",
               plugNewClass,
             ].join(" ")}
           >
@@ -162,47 +162,6 @@ export const LoggedOut: FC = () => {
                     <div className="flex flex-row">
                       <SparklesIcon className="h-6 w-6 mr-2" />
                       Supernova Demo Day Presentation
-                    </div>
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex justify-around w-full flex-row">
-                <div className="flex">
-                  <button
-                    className={slideClass}
-                    onClick={(event) => {
-                      window.open(
-                        "https://www.youtube.com/watch?v=TK-RihJkvDw",
-                        "_blank"
-                      );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
-                    }}
-                  >
-                    <div className="flex flex-row">
-                      <VideoCameraIcon className="h-6 w-6 mr-2" />
-                      View Youtube Video
-                    </div>
-                  </button>
-                </div>
-              </div>
-              <div className="flex justify-around w-full flex-row">
-                <div className="flex">
-                  <button
-                    className={slideClass}
-                    onClick={(event) => {
-                      window.open(
-                        "https://www.devpost.com/software/decentralized-time",
-                        "_blank"
-                      );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
-                    }}
-                  >
-                    <div className="flex flex-row">
-                      <ChevronRightIcon className="h-6 w-6 mr-2" />
-                      Read Devpost Profile
                     </div>
                   </button>
                 </div>
@@ -296,6 +255,51 @@ export const LoggedOut: FC = () => {
                   </button>
                 </div>
               </div>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://www.youtube.com/watch?v=TK-RihJkvDw",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <VideoCameraIcon className="h-6 w-6 mr-2" />
+                      View Youtube Video
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div className="flex justify-around w-full flex-row">
+                <div className="flex">
+                  <button
+                    className={slideClass}
+                    onClick={(event) => {
+                      window.open(
+                        "https://www.devpost.com/software/decentralized-time",
+                        "_blank"
+                      );
+                      // setIsOpen(true);
+                      // console.log("clicky clicky");
+                    }}
+                  >
+                    <div className="flex flex-row">
+                      <ChevronRightIcon className="h-6 w-6 mr-2" />
+                      Read Devpost Profile
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className=" col-span-1 bg-black bg-opacity-80 rounded-lg p-4">
+              <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2">
+                Extras
+              </h3>
               <div className="flex justify-around w-full flex-row">
                 <div className="flex">
                   <button
