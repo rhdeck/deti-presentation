@@ -4,8 +4,15 @@ import background from "./assets/bg.png";
 import { ActorSubclass } from "@dfinity/agent";
 import { _SERVICE } from "./declarations/backend/backend.did";
 import { createActor } from "./declarations/backend";
-import { FaFilePowerpoint, FaGithub, FaHourglass } from "react-icons/fa";
+import {
+  FaFilePowerpoint,
+  FaGithub,
+  FaHourglass,
+  FaNpm,
+  FaTwitter,
+} from "react-icons/fa";
 import config from "./config.json";
+import { toast } from "react-toastify";
 import {
   ArrowUpIcon,
   CheckCircleIcon,
@@ -45,25 +52,34 @@ export const LoggedOut: FC = () => {
   const backend = useBackend();
   useEffect(() => {
     setTimeout(() => {
-      setNewClass("blur-xl");
+      setNewClass("blur-sm");
       setPlugNewClass("opacity-100");
-    }, 2000);
+      console.log("set to 100");
+    }, 5000);
   }, []);
+  const [isFirst, setIsFirst] = useState(BigInt(0));
   useEffect(() => {
     if (ticks) {
-      setNewClass("blur-xl");
-      setTimeout(() => {
-        setNewClass("blur-sm");
-      }, 1500);
+      if (!isFirst) {
+        setIsFirst(ticks);
+      } else {
+        if (ticks !== isFirst) {
+          setNewClass("blur-lg");
+          toast("Received a DeTi Message!");
+          setTimeout(() => {
+            setNewClass("blur-sm");
+          }, 1500);
+        }
+      }
     }
-  }, [ticks]);
+  }, [ticks, isFirst]);
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !isFirst) {
       setPlugNewClass("opacity-0");
     } else {
       setPlugNewClass("opacity-100");
     }
-  }, [isOpen]);
+  }, [isOpen, isFirst]);
   const getStats = useCallback(async () => {
     if (backend) {
       console.log("I am working with a backend");
@@ -103,11 +119,11 @@ export const LoggedOut: FC = () => {
       >
         <div
           className={[
-            "flex flex-col justify-between transition-opacity  duration-1000",
+            "max-h-screen overflow-scroll flex flex-col justify-between transition-opacity  duration-1000",
             plugNewClass,
           ].join(" ")}
         >
-          <div className="bg-black bg-opacity-50 flex flex-row w-screen justify-between p-4">
+          {/* <div className="bg-black bg-opacity-50 flex flex-row w-screen justify-between p-4">
             <a
               href="https://github.com/akshay-rakheja/supernova2022"
               className="text-gray-200 hover:text-gray-100 hover:scale-105 transition duration-250"
@@ -120,9 +136,12 @@ export const LoggedOut: FC = () => {
             <div className=" font-bold text-white opacity-50">
               ...or just enjoy the pulses every 10s
             </div>
-          </div>
-
+          </div> */}
+          <div></div>
           <div>
+            <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-60 rounded-lg">
+              Presentation
+            </h3>
             <div className="flex justify-around w-full flex-row">
               <div className="flex">
                 <button
@@ -160,6 +179,9 @@ export const LoggedOut: FC = () => {
                 </button>
               </div>
             </div>
+            <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-60 rounded-lg">
+              Demonstration
+            </h3>
 
             <div className="flex justify-around w-full flex-row">
               <div className="flex">
@@ -181,7 +203,6 @@ export const LoggedOut: FC = () => {
                 </button>
               </div>
             </div>
-
             <div className="flex justify-around w-full flex-row">
               <div className="flex">
                 <button
@@ -198,6 +219,63 @@ export const LoggedOut: FC = () => {
                   <div className="flex flex-row">
                     <CheckCircleIcon className="h-6 w-6 mr-2" />
                     DeTi Tester
+                  </div>
+                </button>
+              </div>
+            </div>
+            <h3 className="text-gray-100 font-medium text-2xl flex justify-center p-2 m-2 bg-black bg-opacity-60 rounded-lg">
+              Resources
+            </h3>
+            <div className="flex justify-around w-full flex-row">
+              <div className="flex">
+                <button
+                  className={slideClass}
+                  onClick={(event) => {
+                    window.open(
+                      "https://github.com/akshay-rakheja/supernova2022",
+                      "_blank"
+                    );
+                    // setIsOpen(true);
+                    // console.log("clicky clicky");
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <FaGithub className="h-6 w-6 mr-2" />
+                    DeTi GitHub
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="flex justify-around w-full flex-row">
+              <div className="flex">
+                <button
+                  className={slideClass}
+                  onClick={(event) => {
+                    window.open("https://twitter.com/deti_icp", "_blank");
+                    // setIsOpen(true);
+                    // console.log("clicky clicky");
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <FaTwitter className="h-6 w-6 mr-2" />
+                    DeTi Twitter
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="flex justify-around w-full flex-row">
+              <div className="flex">
+                <button
+                  className={slideClass}
+                  onClick={(event) => {
+                    window.open("https://npmjs.com/@raydeck/useplug", "_blank");
+                    // setIsOpen(true);
+                    // console.log("clicky clicky");
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <FaNpm className="h-6 w-6 mr-2" />
+                    usePlug NPM package
                   </div>
                 </button>
               </div>
