@@ -25,6 +25,7 @@ import Eight from "./assets/8.png";
 import Nine from "./assets/9.png";
 import Ten from "./assets/10.png";
 import Eleven from "./assets/11.png";
+import Twelve from "./assets/12.png";
 import useWindowSize from "./useWindowSize";
 const slideClass =
   " group w-80 mb-6 bg-black bg-opacity-80 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
@@ -46,6 +47,7 @@ const slideData = [
   { image: Nine },
   { image: Ten },
   { image: Eleven },
+  { image: Twelve },
 ];
 export const ModalSlides: FC<{
   show: boolean;
@@ -69,7 +71,7 @@ export const ModalSlides: FC<{
   const [currentStep, setCurrentStep] = useState(0);
   const pressedRight = useKeyPress("ArrowRight");
   const pressedLeft = useKeyPress("ArrowLeft");
-  const pressedSpace = useKeyPress("Spacebar");
+  const pressedSpace = useKeyPress("Space");
   const pressedEscape = useKeyPress("Escape");
   useEffect(() => {
     setShow(false);
@@ -119,7 +121,9 @@ export const ModalSlides: FC<{
   //   if (closeButton.current && rightButton.current) closeButton.current?.blur();
   //   rightButton.current?.focus();
   // }, [rightButton, closeButton]);
-
+  useEffect(() => {
+    if (show) setCurrentStep(0);
+  }, [show]);
   return (
     <Transition show={show} as={Fragment}>
       <Dialog
@@ -170,19 +174,11 @@ export const ModalSlides: FC<{
                     unmount={false}
                     show={currentStep === index}
                     enter="transform transition ease-in-out duration-500"
-                    enterFrom={
-                      moving === "right"
-                        ? `translate-x-96 opacity-0`
-                        : `-translate-x-96 opacity-0`
-                    }
+                    enterFrom={moving === "right" ? `opacity-0` : `opacity-0`}
                     enterTo={` opacity-100`}
                     leave="transform transition ease-in-out duration-500 "
-                    leaveFrom={`translate-x-0 opacity-100`}
-                    leaveTo={
-                      moving === "right"
-                        ? `-translate-x-full opacity-0`
-                        : `translate-x-full opacity-0`
-                    }
+                    leaveFrom={`opacity-100`}
+                    leaveTo={moving === "right" ? `opacity-0` : `opacity-0`}
                     className="bg-black overflow-visible absolute "
                     style={{ height: targetHeight }}
                     as="div"

@@ -127,3 +127,6 @@ dist
 .pnp.*
 .dfx
 */target/*
+src/declarations/backend/backend.did
+src/declarations/backend/backend.did.d.ts
+src/declarations/backend/index.js
