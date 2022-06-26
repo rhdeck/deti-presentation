@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Helmet>
-        <title>DeTi: Decentralized Time</title>
+        <title>DeTi: Decentralized Supernova Presentation</title>
       </Helmet>
       <PlugProvider whitelist={whitelist}>
         <Fragment>
