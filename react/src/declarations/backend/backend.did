@@ -1,0 +1,4 @@
+service: {
+    "getTicks": () -> (nat) query;
+    "tick": () -> ();
+}

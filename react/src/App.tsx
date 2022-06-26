@@ -3,7 +3,7 @@ import LoggedOut from "./LoggedOut";
 import { PlugProvider, Authenticated, Unauthenticated } from "@raydeck/useplug";
 import config from "./config.json";
 import { Helmet } from "react-helmet";
-import NavigationMain from "./NavigationMain";
+// import NavigationMain from "./NavigationMain";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,9 +18,9 @@ function App() {
       </Helmet>
       <PlugProvider whitelist={whitelist}>
         <Fragment>
-          <Authenticated>
+          {/* <Authenticated>
             <NavigationMain />
-          </Authenticated>
+          </Authenticated> */}
           <Unauthenticated>
             <LoggedOut />
           </Unauthenticated>

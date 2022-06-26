@@ -47,7 +47,7 @@ dirs.forEach((dir) => {
     if (local_canisters) obj.local.canisters = local_canisters;
     const newJson = JSON.stringify(obj, null, 2);
     writeFileSync(configPath, newJson);
-    const declarationsPath = join(__dirname, dir, "src", "declarations");
+    const declarationsPath = join(__dirname, dir, "src");
     execSync(`cp -r src/declarations ${declarationsPath}`, {
       stdio: "inherit",
     });

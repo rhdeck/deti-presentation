@@ -1,46 +1,86 @@
 import React, { FC, Fragment, useCallback, useEffect, useState } from "react";
-import { PlugButton } from "@raydeck/useplug";
+// import { PlugButton } from "@raydeck/useplug";
 import background from "./assets/bg.png";
 import { ActorSubclass } from "@dfinity/agent";
-import { _SERVICE } from "./declarations/heartbeat/heartbeat.did";
-import { createActor } from "./declarations/heartbeat";
-import { FaGithub } from "react-icons/fa";
+import { _SERVICE } from "./declarations/backend/backend.did";
+import { createActor } from "./declarations/backend";
+import { FaFilePowerpoint, FaGithub, FaHourglass } from "react-icons/fa";
 import config from "./config.json";
-import { ArrowUpIcon, QuestionMarkCircleIcon } from "@heroicons/react/outline";
-import ModalMD from "./ModalMD";
-import raw from "raw.macro";
-const markdown = raw("./about.md");
+import {
+  ArrowUpIcon,
+  CheckCircleIcon,
+  QuestionMarkCircleIcon,
+  SparklesIcon,
+  VideoCameraIcon,
+} from "@heroicons/react/outline";
+import ModalSlides from "./ModalSlides";
+const slideClass =
+  "w-80 mb-6 bg-black bg-opacity-80 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
 
 const {
   host,
   canisters: { backend },
 } = config[config.mode as "production" | "local"];
-
+let timer: NodeJS.Timer;
 const useBackend = () => {
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
   useEffect(() => {
     (async () => {
-      const a = await createActor(backend, {
+      console.log("GEtting agent", host, backend);
+      const a = createActor(backend, {
         agentOptions: { host },
       });
+      console.log("I have an agent");
       setActor(a);
     })();
   }, []);
   return actor;
 };
-let timer: NodeJS.Timer;
 export const LoggedOut: FC = () => {
   const [newClass, setNewClass] = useState("");
   const [plugNewClass, setPlugNewClass] = useState("opacity-0");
   const [iconNewClass, setIconNewClass] = useState("text-black");
   const [isOpen, setIsOpen] = useState(false);
+  const [ticks, setTicks] = useState(BigInt(0));
   const backend = useBackend();
   useEffect(() => {
     setTimeout(() => {
-      // setNewClass("blur-xl");
+      setNewClass("blur-xl");
       setPlugNewClass("opacity-100");
     }, 2000);
   }, []);
+  useEffect(() => {
+    if (ticks) {
+      setNewClass("blur-xl");
+      setTimeout(() => {
+        setNewClass("blur-sm");
+      }, 1500);
+    }
+  }, [ticks]);
+  useEffect(() => {
+    if (isOpen) {
+      setPlugNewClass("opacity-0");
+    } else {
+      setPlugNewClass("opacity-100");
+    }
+  }, [isOpen]);
+  const getStats = useCallback(async () => {
+    if (backend) {
+      console.log("I am working with a backend");
+      const ticks = await backend.getTicks();
+      console.log("I got back ticks of", ticks);
+      setTicks(ticks);
+    }
+  }, [backend]);
+  useEffect(() => {
+    if (backend) {
+      clearInterval(timer);
+      timer = setInterval(getStats, 5000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [getStats, backend]);
 
   return (
     <Fragment>
@@ -81,46 +121,92 @@ export const LoggedOut: FC = () => {
               ...or just enjoy the pulses every 10s
             </div>
           </div>
-          <div></div>
-          <div></div>
+
           <div>
             <div className="flex justify-around w-full flex-row">
               <div className="flex">
-                <PlugButton dark title="Get Started With Plug" />
+                <button
+                  className={slideClass}
+                  onClick={(event) => {
+                    setIsOpen(true);
+                    console.log("clicky clicky");
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <SparklesIcon className="h-6 w-6 mr-2" />
+                    Supernova Demo Day Presentation
+                  </div>
+                </button>
               </div>
             </div>
-            <div>
-              <div className="flex justify-around w-full flex-row">
-                <ArrowUpIcon
-                  className={[
-                    "w-20 h-20 transition duration-1000 ",
-                    iconNewClass,
-                  ].join(" ")}
-                />
-              </div>
-            </div>
-          </div>
 
-          <div className="flex justify-around w-full flex-row"></div>
-          <div className="flex justify-around w-full flex-row">
-            <div className="flex">
-              <button
-                className="mb-6 bg-black bg-opacity-80 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60"
-                onClick={(event) => {
-                  setIsOpen(true);
-                  console.log("clicky clicky");
-                }}
-              >
-                <div className="flex flex-row">
-                  <QuestionMarkCircleIcon className="h-6 w-6 mr-2" />
-                  About This Service
-                </div>
-              </button>
+            <div className="flex justify-around w-full flex-row">
+              <div className="flex">
+                <button
+                  className={slideClass}
+                  onClick={(event) => {
+                    window.open(
+                      "https://www.youtube.com/watch?v=TK-RihJkvDw",
+                      "_blank"
+                    );
+                    // setIsOpen(true);
+                    // console.log("clicky clicky");
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <VideoCameraIcon className="h-6 w-6 mr-2" />
+                    View Youtube Video
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex justify-around w-full flex-row">
+              <div className="flex">
+                <button
+                  className={slideClass}
+                  onClick={(event) => {
+                    window.open(
+                      "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/",
+                      "_blank"
+                    );
+                    // setIsOpen(true);
+                    // console.log("clicky clicky");
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <FaHourglass className="h-6 w-6 mr-2" />
+                    DeTi Home Page
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex justify-around w-full flex-row">
+              <div className="flex">
+                <button
+                  className={slideClass}
+                  onClick={(event) => {
+                    window.open(
+                      "https://d7hzd-wiaaa-aaaap-qamba-cai.ic0.app/",
+                      "_blank"
+                    );
+                    // setIsOpen(true);
+                    // console.log("clicky clicky");
+                  }}
+                >
+                  <div className="flex flex-row">
+                    <CheckCircleIcon className="h-6 w-6 mr-2" />
+                    DeTi Tester
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
+          <div className="flex justify-around w-full flex-row"></div>
         </div>
       </div>
-      <ModalMD show={isOpen} setShow={setIsOpen} markdown={markdown} />
+      <ModalSlides show={isOpen} setShow={setIsOpen} />
     </Fragment>
   );
 };

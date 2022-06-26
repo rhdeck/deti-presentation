@@ -8,7 +8,9 @@
     "generate": "dfx generate backend && ts-node generate_config.ts",
     "postinstall": "(cd react && yarn) && (cd azle && yarn)",
     "deploy:local": "ts-node set_mode.ts local && yarn rebuild && dfx deploy",
-    "deploy:production": "ts-node set_mode.ts production && yarn rebuild && dfx deploy --network ic"
+    "deploy:production": "ts-node set_mode.ts production && yarn rebuild && dfx deploy --network ic",
+    "config:local": "ts-node generate_config.ts && ts-node set_mode.ts local",
+    "config:production": "ts-node generate_config.ts && ts-node set_mode.ts production"
   },
   "dependencies": {
     "@types/node": "^18.0.0",
