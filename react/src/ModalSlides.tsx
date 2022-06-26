@@ -25,7 +25,7 @@ import Eight from "./assets/8.png";
 import Nine from "./assets/9.png";
 import Ten from "./assets/10.png";
 import Eleven from "./assets/11.png";
-import Twelve from "./assets/12.png";
+import Twelve from "./assets/1.png";
 import useWindowSize from "./useWindowSize";
 const slideClass =
   " group w-80 mb-6 bg-black bg-opacity-80 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
@@ -41,7 +41,7 @@ const slideData = [
   { image: Three },
   { image: Four },
   { image: Five },
-  { image: Six },
+  { embed: "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/" },
   { image: Seven },
   { image: Eight },
   { image: Nine },
@@ -60,9 +60,16 @@ export const ModalSlides: FC<{
   }, [windowSize]);
   const slides = useMemo(
     () =>
-      slideData.map(({ image }, index) => (
-        <div style={{ height: targetHeight }}>
-          <img src={image} style={{ objectFit: "contain" }} />
+      slideData.map(({ image, embed }, index) => (
+        <div style={{ height: targetHeight }} className="align-center">
+          {image && <img src={image} style={{ objectFit: "contain" }} />}
+          {embed && (
+            <iframe
+              src={embed}
+              style={{ height: targetHeight }}
+              className=" w-screen"
+            />
+          )}
         </div>
       )),
     [targetHeight]
@@ -131,7 +138,7 @@ export const ModalSlides: FC<{
           console.log("I iz closing");
           // setShow(false);
         }}
-        className="absolute z-50"
+        className="absolute z-50 "
       >
         <Transition.Child
           as={Fragment}
@@ -147,7 +154,9 @@ export const ModalSlides: FC<{
             //   console.log("I iz closing 2");
             //   setShow(false);
             // }}
-            className={"fixed inset-0 flex items-center justify-center "}
+            className={
+              "fixed inset-0 flex items-center justify-center bg-black bg-opacity-80"
+            }
           >
             <Dialog.Panel className="flex-col relative justify-center flex max-h-screen w-screen m-4 z-50 ">
               <div className="absolute top-1 right-20 z-50 bg-green-500 ">
