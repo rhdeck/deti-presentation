@@ -40,8 +40,8 @@ const slideData = [
   { image: Two },
   { image: Three },
   { image: Four },
-  { image: Five },
   { embed: "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/" },
+  { image: Six },
   { image: Seven },
   { image: Eight },
   { image: Nine },
@@ -54,20 +54,25 @@ export const ModalSlides: FC<{
   setShow: (show: boolean) => void;
 }> = ({ show, setShow }) => {
   const [targetHeight, setTargetHeight] = useState(0);
+  const [targetWidth, setTargetWidth] = useState(0);
   const windowSize = useWindowSize();
   useEffect(() => {
     setTargetHeight((((windowSize.width * 1) / 1) * 9) / 16);
   }, [windowSize]);
+  useEffect(() => {
+    setTargetWidth(
+      windowSize.width > 1536 ? windowSize.width * 0.75 : windowSize.width
+    );
+  }, [windowSize]);
   const slides = useMemo(
     () =>
       slideData.map(({ image, embed }, index) => (
-        <div style={{ height: targetHeight }} className="align-center">
+        <div style={{ height: targetHeight }} className="w-full align-center">
           {image && <img src={image} style={{ objectFit: "contain" }} />}
           {embed && (
             <iframe
               src={embed}
-              style={{ height: targetHeight }}
-              className=" w-screen"
+              style={{ height: targetHeight, width: targetWidth }}
             />
           )}
         </div>
@@ -88,16 +93,20 @@ export const ModalSlides: FC<{
     setMoving("left");
     setCurrentStep((old) => Math.max(old - 1, 0));
   }, []);
-  const goRight = useCallback((event?: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("Pressed right");
-    setMoving("right");
-    setCurrentStep((old) => Math.min(old + 1, slides.length - 1));
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    return false;
-  }, []);
+  const goRight = useCallback(
+    (event?: React.MouseEvent<HTMLButtonElement>) => {
+      console.log("Pressed right");
+      setMoving("right");
+      if (currentStep === slides.length - 1) setShow(false);
+      setCurrentStep((old) => Math.min(old + 1, slides.length - 1));
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      return false;
+    },
+    [currentStep, setShow, slides]
+  );
   const goTo = useCallback(
     (index: number) => {
       if (index > currentStep) {
@@ -158,10 +167,10 @@ export const ModalSlides: FC<{
               "fixed inset-0 flex items-center justify-center bg-black bg-opacity-80"
             }
           >
-            <Dialog.Panel className="flex-col relative justify-center flex max-h-screen w-screen m-4 z-50 ">
+            <Dialog.Panel className="flex-col relative justify-center flex max-h-screen w-screen 2xl:w-3/4 m-4 z-50 ">
               <div className="absolute top-1 right-20 z-50 bg-green-500 ">
                 <div className="absolute p-4">
-                  <div
+                  <button
                     onClick={() => {
                       console.log("I iz closing XXXXXXX");
                       setShow(false);
@@ -169,7 +178,7 @@ export const ModalSlides: FC<{
                     // ref={closeButton}
                   >
                     <XCircleIcon className="h-12 w-12 text-gray-600 hover:text-gray-200 transition" />
-                  </div>
+                  </button>
                 </div>
               </div>
               <div
