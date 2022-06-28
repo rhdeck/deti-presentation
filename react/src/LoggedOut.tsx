@@ -39,11 +39,9 @@ const useBackend = () => {
   const [actor, setActor] = useState<ActorSubclass<_SERVICE>>();
   useEffect(() => {
     (async () => {
-      console.log("GEtting agent", host, backend);
       const a = createActor(backend, {
         agentOptions: { host },
       });
-      console.log("I have an agent");
       setActor(a);
     })();
   }, []);
@@ -60,7 +58,6 @@ export const LoggedOut: FC = () => {
     setTimeout(() => {
       setNewClass(blurOff);
       setPlugNewClass("opacity-100");
-      console.log("set to 100");
     }, 5000);
   }, []);
   const [isFirst, setIsFirst] = useState(BigInt(0));
@@ -88,9 +85,7 @@ export const LoggedOut: FC = () => {
   }, [isOpen, isFirst]);
   const getStats = useCallback(async () => {
     if (backend) {
-      console.log("I am working with a backend");
       const ticks = await backend.getTicks();
-      console.log("I got back ticks of", ticks);
       setTicks(ticks);
     }
   }, [backend]);
@@ -160,7 +155,6 @@ export const LoggedOut: FC = () => {
                     className={slideClass}
                     onClick={(event) => {
                       setIsOpen(true);
-                      console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -217,8 +211,6 @@ export const LoggedOut: FC = () => {
                         "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/",
                         "_blank"
                       );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -237,8 +229,6 @@ export const LoggedOut: FC = () => {
                         "https://d7hzd-wiaaa-aaaap-qamba-cai.ic0.app/",
                         "_blank"
                       );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -257,8 +247,6 @@ export const LoggedOut: FC = () => {
                         "https://pax7q-vaaaa-aaaap-qanoq-cai.ic0.app/",
                         "_blank"
                       );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -280,8 +268,6 @@ export const LoggedOut: FC = () => {
                     className={slideClass}
                     onClick={(event) => {
                       window.open("https://twitter.com/deti_icp", "_blank");
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -300,8 +286,6 @@ export const LoggedOut: FC = () => {
                         "https://www.youtube.com/watch?v=TK-RihJkvDw",
                         "_blank"
                       );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -320,8 +304,6 @@ export const LoggedOut: FC = () => {
                         "https://www.devpost.com/software/decentralized-time",
                         "_blank"
                       );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -345,8 +327,6 @@ export const LoggedOut: FC = () => {
                         "https://npmjs.com/@raydeck/useplug",
                         "_blank"
                       );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">
@@ -365,8 +345,6 @@ export const LoggedOut: FC = () => {
                         "https://github.com/rhdeck/deti-presentation",
                         "_blank"
                       );
-                      // setIsOpen(true);
-                      // console.log("clicky clicky");
                     }}
                   >
                     <div className="flex flex-row">

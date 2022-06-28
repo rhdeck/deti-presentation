@@ -69,7 +69,14 @@ export const ModalSlides: FC<{
   const [targetWidth, setTargetWidth] = useState(0);
   const windowSize = useWindowSize();
   useEffect(() => {
-    setTargetHeight((((windowSize.width * 1) / 1) * 9) / 16);
+    const factor = 1.4;
+    if (windowSize.width > windowSize.height * factor) {
+      setTargetWidth(windowSize.height * factor);
+      setTargetHeight((((windowSize.height * factor) / 1) * 9) / 16);
+    } else {
+      setTargetWidth(windowSize.width);
+      setTargetHeight((((windowSize.width * 1) / 1) * 9) / 16);
+    }
   }, [windowSize]);
   useEffect(() => {
     setTargetWidth(
@@ -80,7 +87,17 @@ export const ModalSlides: FC<{
     () =>
       slideData.map(({ image, embed, url }, index) => (
         <div style={{ height: targetHeight }} className="w-full align-center">
-          {image && <img src={image} style={{ objectFit: "contain" }} />}
+          {image && (
+            <img
+              key={index}
+              src={image}
+              style={{
+                objectFit: "contain",
+                height: targetHeight,
+                width: targetWidth,
+              }}
+            />
+          )}
           {embed && (
             <iframe
               src={embed}
@@ -118,17 +135,33 @@ export const ModalSlides: FC<{
     setShow(false);
   }, [pressedEscape, setShow]);
   const currentStepRef = useRef(currentStep);
+  const oldStepRef = useRef(0);
   const goLeft = useCallback(() => {
-    console.log("Pressed left");
     setMoving("left");
-    setCurrentStep((old) => Math.max(old - 1, 0));
+    setCurrentStep((old) => {
+      oldStepRef.current = old;
+      return Math.max(old - 1, 0);
+    });
   }, []);
   const goRight = useCallback(
     (event?: React.MouseEvent<HTMLButtonElement>) => {
-      console.log("Pressed right");
       setMoving("right");
-      if (currentStepRef.current === slides.length - 1) setShow(false);
-      setCurrentStep((old) => Math.min(old + 1, slides.length - 1));
+      if (currentStepRef.current === slides.length - 1) {
+        console.timeEnd("slide-" + currentStepRef.current);
+        const allsecs = (new Date().valueOf() - startTimeRef.current) / 1000;
+        const mins = Math.floor(allsecs / 60);
+        const secs = Math.floor(allsecs % 60);
+        console.log(
+          "slide-" + currentStepRef.current,
+          new Date().toLocaleTimeString(),
+          `${mins}:${secs}`
+        );
+        setShow(false);
+      }
+      setCurrentStep((old) => {
+        oldStepRef.current = old;
+        return Math.min(old + 1, slides.length - 1);
+      });
       if (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -144,39 +177,51 @@ export const ModalSlides: FC<{
       } else {
         setMoving("left");
       }
+      oldStepRef.current = currentStep;
       setCurrentStep(index);
     },
     [currentStep]
   );
   useEffect(() => {
     if (pressedRight) {
-      console.log("pressed rigth");
       goRight();
     } else if (pressedLeft) {
       goLeft();
     }
   }, [goLeft, goRight, pressedLeft, pressedRight, pressedSpace]);
   useEffect(() => {
-    console.log("Current slide index is ", currentStep);
     currentStepRef.current = currentStep;
   }, [currentStep, slides.length]);
   const rightButton = useRef<HTMLButtonElement | null>(null);
-  // useEffect(() => {
-  //   console.log("I switched focus to the rightbutton");
-  // }, [rightButton]);
-  // const closeButton = useRef<HTMLButtonElement | null>(null);
-  // useEffect(() => {
-  //   if (closeButton.current && rightButton.current) closeButton.current?.blur();
-  //   rightButton.current?.focus();
-  // }, [rightButton, closeButton]);
   useEffect(() => {
-    if (show) setCurrentStep(0);
+    if (show) {
+      setCurrentStep(0);
+      startTimeRef.current = 0;
+    }
   }, [show]);
+  const startTimeRef = useRef(0);
+  useEffect(() => {
+    if (!startTimeRef.current && currentStep) {
+      startTimeRef.current = Date.now();
+    }
+
+    console.timeEnd("slide-" + oldStepRef.current);
+    const allsecs = (new Date().valueOf() - startTimeRef.current) / 1000;
+    const mins = Math.floor(allsecs / 60);
+    const secs = Math.floor(allsecs % 60)
+      .toString()
+      .padStart(2, "0");
+    console.log(
+      "slide-" + oldStepRef.current,
+      new Date().toLocaleTimeString(),
+      `${mins}:${secs}`
+    );
+    console.time("slide-" + currentStep);
+  }, [currentStep]);
   return (
     <Transition show={show} as={Fragment}>
       <Dialog
         onClose={() => {
-          console.log("I iz closing");
           // setShow(false);
         }}
         className="absolute z-50 "
@@ -191,20 +236,18 @@ export const ModalSlides: FC<{
           leaveTo="opacity-0"
         >
           <div
-            // onClick={() => {
-            //   console.log("I iz closing 2");
-            //   setShow(false);
-            // }}
             className={
               "fixed inset-0 flex items-center justify-center bg-black bg-opacity-80"
             }
           >
-            <Dialog.Panel className="flex-col relative justify-center flex max-h-screen w-screen 2xl:w-3/4 m-4 z-50 ">
+            <Dialog.Panel
+              className="flex-col relative justify-center flex max-h-screen m-4 z-50 "
+              style={{ width: targetWidth }}
+            >
               <div className="absolute top-1 right-20 z-50 bg-green-500 ">
                 <div className="absolute p-4">
                   <button
                     onClick={() => {
-                      console.log("I iz closing XXXXXXX");
                       setShow(false);
                     }}
                     // ref={closeButton}
@@ -215,11 +258,12 @@ export const ModalSlides: FC<{
               </div>
               <div
                 // onClick={goRight}
-                style={{ height: targetHeight }}
+                style={{ height: targetHeight, width: targetWidth }}
                 className="bg-black  bg-opacity-80 rounded-lg overflow-clip  border-gray-300 shadow-md dark:border-gray-600 border-opacity-40 border-2 relative w-full"
               >
                 {slides.map((slide, index) => (
                   <Transition
+                    key={index}
                     appear={false}
                     unmount={false}
                     show={currentStep === index}
@@ -240,6 +284,7 @@ export const ModalSlides: FC<{
               <div className="flex flex-row justify-center">
                 {slides.map((slide, buttonIndex) => (
                   <button
+                    key={"button" + buttonIndex}
                     className={
                       currentStep === buttonIndex
                         ? currentSelectorClass
