@@ -145,8 +145,9 @@ export const LoggedOut: FC = () => {
             </div>
           </div> */}
             <div className="lg:hidden col-span-1">
-              <h2 className="text-gray-100 font-bold text-4xl flex justify-center p-4 m-2 bg-black bg-opacity-80 rounded-lg">
-                Decentralized Time
+              <h2 className="text-center align-center text-gray-100 font-bold text-4xl flex justify-center p-4 m-2 bg-black bg-opacity-80 rounded-lg">
+                Decentralized <br className="md:hidden" />
+                Time Travel
               </h2>
             </div>
             <div className=" col-span-1 bg-black bg-opacity-80 rounded-lg p-4">
@@ -361,7 +362,7 @@ export const LoggedOut: FC = () => {
                     className={slideClass}
                     onClick={(event) => {
                       window.open(
-                        "https://github.com/rhdeck/ic-azle-react-template",
+                        "https://github.com/rhdeck/deti-presentation",
                         "_blank"
                       );
                       // setIsOpen(true);
@@ -370,7 +371,7 @@ export const LoggedOut: FC = () => {
                   >
                     <div className="flex flex-row">
                       <FaGithub className="h-6 w-6 mr-2" />
-                      Github Template
+                      Github Repo for This Project
                     </div>
                   </button>
                 </div>

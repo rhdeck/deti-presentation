@@ -130,3 +130,4 @@ dist
 src/declarations/backend/backend.did
 src/declarations/backend/backend.did.d.ts
 src/declarations/backend/index.js
+.DS_Store

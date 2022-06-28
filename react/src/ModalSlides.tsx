@@ -14,18 +14,25 @@ import {
   XCircleIcon,
 } from "@heroicons/react/outline";
 import useKeyPress from "./useKeyPress";
-import One from "./assets/2.png";
-import Two from "./assets/3.png";
-import Three from "./assets/4.png";
-import Four from "./assets/5.png";
-import Six from "./assets/7.png";
-import Seven from "./assets/8.png";
-import Eight from "./assets/9.png";
-import Nine from "./assets/10.png";
-import Ten from "./assets/11.png";
-import Eleven from "./assets/12.png";
-import Twelve from "./assets/2.png";
+import One from "./assets/1.png";
+import Two from "./assets/2.png";
+import Three from "./assets/3.png";
+import Four from "./assets/4.png";
+import Six from "./assets/6.png";
+import Seven from "./assets/7.png";
+import Eight from "./assets/8.png";
+import Nine from "./assets/9.png";
+import Ten from "./assets/10.png";
+import Eleven from "./assets/11.png";
+import Twelve from "./assets/12.png";
+import Thirteen from "./assets/13.png";
+import Fourteen from "./assets/14.png";
+import Fifteen from "./assets/15.png";
+import Sixteen from "./assets/16.png";
+import Seventeen from "./assets/17.png";
+import Eighteen from "./assets/18.png";
 import useWindowSize from "./useWindowSize";
+import { Link } from "react-router-dom";
 const slideClass =
   " group w-80 mb-6 bg-black bg-opacity-80 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
 const selectorClass =
@@ -39,7 +46,7 @@ const slideData = [
   { image: Two },
   { image: Three },
   { image: Four },
-  { embed: "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/" },
+  { url: "https://fl5mh-daaaa-aaaap-qalja-cai.ic0.app/" },
   { image: Six },
   { image: Seven },
   { image: Eight },
@@ -47,7 +54,13 @@ const slideData = [
   { image: Ten },
   { image: Eleven },
   { image: Twelve },
-];
+  { image: Thirteen },
+  { image: Fourteen },
+  // { image: Fifteen },
+  // { image: Sixteen },
+  // { image: Seventeen },
+  // { image: Eighteen },
+] as { image?: string; embed?: string; url?: string }[];
 export const ModalSlides: FC<{
   show: boolean;
   setShow: (show: boolean) => void;
@@ -65,7 +78,7 @@ export const ModalSlides: FC<{
   }, [windowSize]);
   const slides = useMemo(
     () =>
-      slideData.map(({ image, embed }, index) => (
+      slideData.map(({ image, embed, url }, index) => (
         <div style={{ height: targetHeight }} className="w-full align-center">
           {image && <img src={image} style={{ objectFit: "contain" }} />}
           {embed && (
@@ -73,6 +86,23 @@ export const ModalSlides: FC<{
               src={embed}
               style={{ height: targetHeight, width: targetWidth }}
             />
+          )}
+          {url && (
+            <div
+              style={{ height: targetHeight, width: targetWidth }}
+              className="flex flex-col justify-center align-center"
+            >
+              <div className="flex flex-row justify-center">
+                <a
+                  rel="noopener noreferrer"
+                  href={url}
+                  target="_blank"
+                  className="hover:scale-105 hover:bg-opacity-100 border-4 border-orange-500 transition-all p-4 text-white font-medium text-lg bg-blue-900 bg-opacity-80 rounded-full"
+                >
+                  Open DeTi For Demo
+                </a>
+              </div>
+            </div>
           )}
         </div>
       )),
