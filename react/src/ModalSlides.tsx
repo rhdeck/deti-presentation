@@ -28,11 +28,7 @@ import Twelve from "./assets/12.png";
 import Thirteen from "./assets/13.png";
 import Fourteen from "./assets/14.png";
 import Fifteen from "./assets/15.png";
-import Sixteen from "./assets/16.png";
-import Seventeen from "./assets/17.png";
-import Eighteen from "./assets/18.png";
 import useWindowSize from "./useWindowSize";
-import { Link } from "react-router-dom";
 const slideClass =
   " group w-80 mb-6 bg-black bg-opacity-80 border-2 border-orange-500 text-md font-medium text-white p-2 rounded-full transition hover:scale-105 transition-duration-250 hover:bg-opacity-60 hover:border-blue-900";
 const selectorClass =
@@ -56,7 +52,7 @@ const slideData = [
   { image: Twelve },
   { image: Thirteen },
   { image: Fourteen },
-  // { image: Fifteen },
+  { image: Fifteen },
   // { image: Sixteen },
   // { image: Seventeen },
   // { image: Eighteen },
